@@ -1,20 +1,22 @@
 package UF3.LlegirNotas;
-
 import java.io.File;
+import java.io.PrintStream;
 import java.util.Scanner;
 
 public class NotesMarca {
     //la paraula fi serveix com a marca de final de fitxer
     public static final String MARCA_FI = "fi";
+    public static final int a = -1;
     public static void main (String[] args) {
         NotesMarca programa = new NotesMarca();
-        programa.inici();
+        programa.inicio();
     }
-    public void inici() {
+    public void inicio() {
         try {
             File f = new File("C:\\Users\\Agust\\IdeaProjects\\CodingWithMarina\\src\\UF3\\LlegirNotas\\NotesMarca.txt");
             Scanner lector = new Scanner(f);
             boolean llegir = true;
+            PrintStream prueba1 = new PrintStream("C:\\Users\\Agust\\IdeaProjects\\CodingWithMarina\\src\\UF3\\LlegirNotas\\prueba1.txt");
             while (llegir) {
                 String nom = lector.next();
                 if (MARCA_FI.equals(nom)) {
@@ -22,11 +24,15 @@ public class NotesMarca {
                 }
                 else {
                     String cognom = lector.next();
-                    System.out.print("Estudiant: " + nom + " " + cognom);
+                    //System.out.print("Estudiant: " + nom + " " + cognom);
                     //Noteu com un scanner es pot passar com paràmetre
                     double mitjana = llegirNotes(lector);
-                    System.out.println("− Mitjana: " + mitjana);
+                    //System.out.println("− Mitjana: " + mitjana);
+                    {
+                        prueba1.println(nom + cognom+ mitjana);
+                    }
                 }
+
             }
             //Cal tancar el fitxer
             lector.close();
@@ -47,15 +53,16 @@ public class NotesMarca {
         double res = 0;
         try {
             //Es fan lectures. Cal controlar excepcions també!
+            int count = 0;
             double numNotes = lector.nextDouble();
-            boolean llegir = true;
-            int notas= 0;
-            while (numNotes!=(-1)) {
-                ++notas;
+            while (numNotes != a){
+                //S’acumula el valor de les notes
                 res = res + numNotes;
+                count++;
                 numNotes = lector.nextDouble();
             }
-            res = res / notas;
+            //Es calcula nota mitjana
+            res = res/numNotes;
         }
         catch (Exception e) {
             //Excepció!
@@ -64,4 +71,3 @@ public class NotesMarca {
         return res;
     }
 }
-
